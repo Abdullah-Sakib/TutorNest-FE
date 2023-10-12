@@ -1,5 +1,5 @@
 "use client";
-import { Button, Col, Row, message } from "antd";
+import { Button, Col, Input, Row, message } from "antd";
 import loginImage from "../../assets/login-image.png";
 import Image from "next/image";
 import Form from "@/components/Forms/Form";
@@ -10,24 +10,30 @@ import { storeUserInfo } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "@/schemas/login";
+import { registerSchema } from "@/schemas/register";
+import { useCreateUserMutation } from "@/redux/api/userApi";
 
 type FormValues = {
   email: string;
   password: string;
 };
 
-const LoginPage = () => {
-  const [userLogin, { isLoading }] = useUserLoginMutation();
+const Register = () => {
+  const [createUser, { isLoading, isSuccess }] = useCreateUserMutation();
   const router = useRouter();
+
+  // console.log(isLoggedIn());
 
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     try {
-      const res = await userLogin({ ...data }).unwrap();
-      if (res?.accessToken) {
-        router.push("/profile");
-        message.success("User logged in successfully!");
+      delete data.confirm_password;
+      const res = await createUser({ ...data }).unwrap();
+
+      console.log(isSuccess);
+      if (isSuccess) {
+        router.push("/login");
+        message.success("User created successfully!");
       }
-      storeUserInfo({ accessToken: res?.accessToken });
     } catch (err: any) {
       console.error(err.message);
     }
@@ -50,11 +56,37 @@ const LoginPage = () => {
             margin: "15px 0px",
           }}
         >
-          First login your account
+          Create a New Account
         </h1>
         <div>
-          <Form submitHandler={onSubmit} resolver={yupResolver(loginSchema)}>
+          <Form submitHandler={onSubmit} resolver={yupResolver(registerSchema)}>
             <div>
+              <FormInput
+                name="first_name"
+                type="text"
+                size="large"
+                label="First Name"
+                required
+              />
+            </div>
+            <div
+              style={{
+                margin: "15px 0px",
+              }}
+            >
+              <FormInput
+                name="last_name"
+                type="text"
+                size="large"
+                label="Last Name"
+                required
+              />
+            </div>
+            <div
+              style={{
+                margin: "15px 0px",
+              }}
+            >
               <FormInput
                 name="email"
                 type="email"
@@ -76,8 +108,21 @@ const LoginPage = () => {
                 required
               />
             </div>
-            <Button type="primary" htmlType="submit" disabled={isLoading}>
-              Login
+            <div
+              style={{
+                margin: "15px 0px",
+              }}
+            >
+              <FormInput
+                name="confirm_password"
+                type="password"
+                size="large"
+                label="Confirm Password"
+                required
+              />
+            </div>
+            <Button disabled={isLoading} type="primary" htmlType="submit">
+              Register
             </Button>
           </Form>
         </div>
@@ -86,4 +131,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default Register;
