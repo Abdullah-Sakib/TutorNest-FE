@@ -25,8 +25,14 @@ const CreateBlog = () => {
     <div>
       <UMBreadCrumb
         items={[
-          { label: `${base}`, link: `/${base}` },
-          { label: "department", link: `/${base}/department` },
+          {
+            label: `blogs`,
+            link: `/${base}/content-management/blogs`,
+          },
+          {
+            label: "create-blog",
+            link: `/${base}/content-management/blogs/create`,
+          },
         ]}
       />
       <h1>Create Department</h1>

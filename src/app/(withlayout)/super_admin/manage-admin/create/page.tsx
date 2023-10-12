@@ -53,12 +53,12 @@ const CreateAdminPage = () => {
       <UMBreadCrumb
         items={[
           {
-            label: "super_admin",
-            link: "/super_admin",
+            label: "manage-admin",
+            link: "/super_admin/manage-admin",
           },
           {
-            label: "admin",
-            link: "/super_admin/admin",
+            label: "create-admin",
+            link: "/super_admin/manage-admin/create",
           },
         ]}
       />

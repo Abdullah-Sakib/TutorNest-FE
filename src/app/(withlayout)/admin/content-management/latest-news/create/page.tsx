@@ -25,8 +25,14 @@ const CreateLatestNews = () => {
     <div>
       <UMBreadCrumb
         items={[
-          { label: `${base}`, link: `/${base}` },
-          { label: "department", link: `/${base}/department` },
+          {
+            label: `latest-news`,
+            link: `/${base}/content-management/latest-news`,
+          },
+          {
+            label: "create-news",
+            link: `/${base}/content-management/latest-news/create`,
+          },
         ]}
       />
       <h1>Create Department</h1>

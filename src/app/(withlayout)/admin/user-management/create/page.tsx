@@ -25,8 +25,8 @@ const CreateUser = () => {
     <div>
       <UMBreadCrumb
         items={[
-          { label: `${base}`, link: `/${base}` },
-          { label: "department", link: `/${base}/department` },
+          { label: `user-management`, link: `/${base}/user-management` },
+          { label: "create-user", link: `/${base}/user-management/create` },
         ]}
       />
       <h1>Create Department</h1>

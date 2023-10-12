@@ -14,97 +14,67 @@ import { USER_ROLE } from "./role";
 export const sidebarItems = (role: string) => {
   const defaultSidebarItems: MenuProps["items"] = [
     {
-      label: "Profile",
+      label: <Link href={`/profile`}>Profile</Link>,
       key: "profile",
       icon: <ProfileOutlined />,
-      children: [
-        {
-          label: <Link href={`/${role}`}>Account Profile</Link>,
-          key: `/${role}/profile`,
-        },
-        {
-          label: <Link href={`/${role}/change-password`}>Change Password</Link>,
-          key: `/${role}/change-password`,
-        },
-      ],
-    },
-  ];
-
-  const commonAdminSidebarItems: MenuProps["items"] = [
-    {
-      label: <Link href={`/${role}/manage-student`}>Manage Students</Link>,
-      icon: <TableOutlined />,
-      key: `/${role}/manage-student`,
-    },
-    {
-      label: <Link href={`/${role}/manage-faculty`}>Manage Faculty</Link>,
-      icon: <TableOutlined />,
-      key: `/${role}/manage-faculty`,
     },
   ];
 
   const adminSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
-    ...commonAdminSidebarItems,
     {
-      label: "Manage academic",
-      key: "manage-academic",
+      label: <Link href={`/${role}/user-management`}>User Management</Link>,
+      key: "user-management",
       icon: <TableOutlined />,
-      children: [
-        {
-          label: <Link href={`/${role}/academic/faculty`}>Faculties</Link>,
-          key: `/${role}/academic/faculty`,
-        },
-        {
-          label: <Link href={`/${role}/academic/department`}>Departments</Link>,
-          key: `/${role}/academic/department`,
-        },
-        {
-          label: <Link href={`/${role}/academic/semester`}>Semesters</Link>,
-          key: `/${role}/academic/semester`,
-        },
-      ],
     },
     {
-      label: "Management",
-      key: "management",
+      label: <Link href={`/${role}/tutor-management`}>Tutor Management</Link>,
+      key: "tutor-management",
+      icon: <TableOutlined />,
+    },
+    {
+      label: (
+        <Link href={`/${role}/booking-management`}>Booking Management</Link>
+      ),
+      key: "booking-management",
+      icon: <TableOutlined />,
+    },
+    {
+      label: "Content Management",
+      key: "content-management",
       icon: <AppstoreOutlined />,
       children: [
         {
-          label: <Link href={`/${role}/department`}>Department</Link>,
-          key: `/${role}/department`,
+          label: <Link href={`/${role}/content-management/blogs`}>Blogs</Link>,
+          key: `/${role}/content-management/blogs`,
         },
         {
-          label: <Link href={`/${role}/building`}>Building</Link>,
-          key: `/${role}/building`,
-        },
-        {
-          label: <Link href={`/${role}/room`}>Rooms</Link>,
-          key: `/${role}/room`,
-        },
-        {
-          label: <Link href={`/${role}/course`}>Course</Link>,
-          key: `/${role}/course`,
+          label: <Link href={`/${role}/content-management/FAQ`}>FAQ</Link>,
+          key: `/${role}/content-management/FAQ`,
         },
         {
           label: (
-            <Link href={`/${role}/semester-registration`}>
-              Semester registration
+            <Link href={`/${role}/content-management/feedbacks`}>
+              Feedbacks
             </Link>
           ),
-          key: `/${role}/semester-registration`,
-        },
-        {
-          label: <Link href={`/${role}/offered-course`}>Offered courses</Link>,
-          key: `/${role}/offered-course`,
+          key: `/${role}/content-management/feedback`,
         },
         {
           label: (
-            <Link href={`/${role}/offered-course-section`}>
-              Course sections
+            <Link href={`/${role}/content-management/latest-news`}>
+              Latest News
             </Link>
           ),
-          key: `/${role}/offered-course-section`,
+          key: `/${role}/content-management/latest-news`,
+        },
+        {
+          label: (
+            <Link href={`/${role}/content-management/upcoming-services`}>
+              Upcoming Services
+            </Link>
+          ),
+          key: `/${role}/content-management/upcoming-services`,
         },
       ],
     },
@@ -112,71 +82,35 @@ export const sidebarItems = (role: string) => {
 
   const superAdminSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
-    ...commonAdminSidebarItems,
     {
-      label: <Link href={`/${role}/admin`}>Manage Admin</Link>,
+      label: <Link href={`/${role}/manage-admin`}>Manage Admin</Link>,
       icon: <TableOutlined />,
-      key: `/${role}/admin`,
-    },
-    {
-      label: <Link href={`/${role}/user`}>Manage User</Link>,
-      icon: <TableOutlined />,
-      key: `/${role}/user`,
-    },
-    {
-      label: "Management",
-      key: "management",
-      icon: <AppstoreOutlined />,
-      children: [
-        {
-          label: <Link href={`/${role}/department`}>Department</Link>,
-          key: `/${role}/department`,
-        },
-      ],
+      key: `/${role}/manage-admin`,
     },
   ];
 
-  const facultySidebarItems: MenuProps["items"] = [
+  const userSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
     {
-      label: <Link href={`/${role}/courses`}>Courses</Link>,
+      label: <Link href={`/${role}/my_bookings`}>My Bookings</Link>,
       icon: <TableOutlined />,
-      key: `/${role}/courses`,
-    },
-  ];
-
-  const studentSidebarItems: MenuProps["items"] = [
-    ...defaultSidebarItems,
-    {
-      label: <Link href={`/${role}/courses`}>Courses</Link>,
-      icon: <TableOutlined />,
-      key: `/${role}/courses`,
+      key: `/${role}/my_bookings`,
     },
     {
-      label: <Link href={`/${role}/courses/schedule`}>Course schedules</Link>,
+      label: <Link href={`/${role}/notifications`}>Notifications</Link>,
       icon: <ScheduleOutlined />,
-      key: `/${role}/courses/schedule`,
+      key: `/${role}/notifications`,
     },
     {
-      label: <Link href={`/${role}/registration`}>Registration</Link>,
+      label: <Link href={`/${role}/feedback`}>Feedback</Link>,
       icon: <ThunderboltOutlined />,
-      key: `/${role}/registration`,
-    },
-    {
-      label: <Link href={`/${role}/payment`}>Payment</Link>,
-      icon: <CreditCardOutlined />,
-      key: `/${role}/payment`,
-    },
-    {
-      label: <Link href={`/${role}/academic-report`}>Academic report</Link>,
-      icon: <FileTextOutlined />,
-      key: `/${role}/academic-report`,
+      key: `/${role}/feedback`,
     },
   ];
 
   if (role === USER_ROLE.SUPER_ADMIN) return superAdminSidebarItems;
   else if (role === USER_ROLE.ADMIN) return adminSidebarItems;
-  else if (role === USER_ROLE.USER) return facultySidebarItems;
+  else if (role === USER_ROLE.USER) return userSidebarItems;
   else {
     return defaultSidebarItems;
   }

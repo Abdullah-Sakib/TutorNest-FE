@@ -74,7 +74,7 @@ const Sidebar = () => {
           marginBottom: "1rem",
         }}
       >
-        UMS
+        TN
       </div>
 
       <Menu

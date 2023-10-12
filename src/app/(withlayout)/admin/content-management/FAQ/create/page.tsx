@@ -25,8 +25,14 @@ const CreateFAQ = () => {
     <div>
       <UMBreadCrumb
         items={[
-          { label: `${base}`, link: `/${base}` },
-          { label: "department", link: `/${base}/department` },
+          {
+            label: `FAQ`,
+            link: `/${base}/content-management/FAQ`,
+          },
+          {
+            label: "create-FAQ",
+            link: `/${base}/content-management/FAQ/create`,
+          },
         ]}
       />
       <h1>Create Department</h1>

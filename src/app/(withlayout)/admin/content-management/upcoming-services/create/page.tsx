@@ -25,8 +25,14 @@ const CreateUpcomingService = () => {
     <div>
       <UMBreadCrumb
         items={[
-          { label: `${base}`, link: `/${base}` },
-          { label: "department", link: `/${base}/department` },
+          {
+            label: `upcoming-services`,
+            link: `/${base}/content-management/upcoming-services`,
+          },
+          {
+            label: "create-service",
+            link: `/${base}/content-management/upcoming-services/create`,
+          },
         ]}
       />
       <h1>Create Department</h1>

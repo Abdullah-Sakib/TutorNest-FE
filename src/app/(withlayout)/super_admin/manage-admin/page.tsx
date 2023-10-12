@@ -6,7 +6,6 @@ import Link from "next/link";
 import {
   DeleteOutlined,
   EditOutlined,
-  FilterOutlined,
   ReloadOutlined,
   EyeOutlined,
 } from "@ant-design/icons";
@@ -164,8 +163,8 @@ const AdminPage = () => {
       <UMBreadCrumb
         items={[
           {
-            label: "super_admin",
-            link: "/super_admin",
+            label: "manage-admin",
+            link: "/super_admin/manage-admin",
           },
         ]}
       />
@@ -179,14 +178,17 @@ const AdminPage = () => {
           }}
         />
         <div>
-          <Link href="/super_admin/admin/create">
-            <Button type="primary">Create Admin</Button>
+          <Link href="/super_admin/manage-admin/create">
+            <Button type="primary" size="large" style={{ marginLeft: "7px" }}>
+              Create Admin
+            </Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
               type="primary"
               onClick={resetFilters}
+              size="large"
             >
               <ReloadOutlined />
             </Button>

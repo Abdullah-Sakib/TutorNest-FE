@@ -37,6 +37,7 @@ const UMTable = ({
 
   return (
     <Table
+      style={{ marginTop: "5px" }}
       loading={loading}
       columns={columns}
       dataSource={dataSource}

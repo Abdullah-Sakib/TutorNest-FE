@@ -25,8 +25,8 @@ const CreateTutorService = () => {
     <div>
       <UMBreadCrumb
         items={[
-          { label: `${base}`, link: `/${base}` },
-          { label: "department", link: `/${base}/department` },
+          { label: `tutor-management`, link: `/${base}/tutor-management` },
+          { label: "create-tutor", link: `/${base}/tutor-management/create` },
         ]}
       />
       <h1>Create Department</h1>
