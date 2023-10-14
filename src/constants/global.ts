@@ -27,6 +27,52 @@ export const departmentOptions = [
   },
 ];
 
+export const categoryOptions = [
+  {
+    label: "School",
+    value: "school",
+  },
+  {
+    label: "High School",
+    value: "highschool",
+  },
+  {
+    label: "College",
+    value: "college",
+  },
+  {
+    label: "University",
+    value: "university",
+  },
+];
+
+export const subjects = [
+  {
+    label: "Math",
+    value: "Math",
+  },
+  {
+    label: "Physics",
+    value: "Physics",
+  },
+  {
+    label: "Chemistry",
+    value: "Chemistry",
+  },
+  {
+    label: "Biology",
+    value: "Biology",
+  },
+  {
+    label: "Bangla",
+    value: "Bangla",
+  },
+  {
+    label: "English",
+    value: "English",
+  },
+];
+
 export const bloodGroupOptions = [
   {
     label: "A+",

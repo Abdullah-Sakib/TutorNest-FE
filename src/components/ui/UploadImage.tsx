@@ -26,34 +26,13 @@ const beforeUpload = (file: RcFile) => {
 
 type ImageUploadProps = {
   name: string;
+  label?: string;
 };
 
-const UploadImage = ({ name }: ImageUploadProps) => {
+const UploadImage = ({ name, label }: ImageUploadProps) => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
   const { setValue } = useFormContext();
-
-  const handleChange: UploadProps["onChange"] = (
-    info: UploadChangeParam<UploadFile>
-  ) => {
-    if (info.file.status === "uploading") {
-      setLoading(true);
-      return;
-    }
-    if (info.file.status === "done") {
-      // Get this url from response in real world.
-      setValue(name, info.file.originFileObj);
-      getBase64(info.file.originFileObj as RcFile, (url) => {
-        setLoading(false);
-        setImageUrl(url);
-      });
-    }
-    if (info.file.status === "error") {
-      setLoading(false);
-      message.error("Something went wrong!");
-      return;
-    }
-  };
 
   const uploadButton = (
     <div>
@@ -62,16 +41,46 @@ const UploadImage = ({ name }: ImageUploadProps) => {
     </div>
   );
 
+  const customRequest = (data: any) => {
+    setLoading(true);
+    const formData = new FormData();
+
+    formData.append("file", data?.file);
+    formData.append(
+      "upload_preset",
+      process.env.NEXT_PUBLIC_UPLOAD_PRESET as string
+    );
+    formData.append("cloud_name", process.env.NEXT_PUBLIC_CLOUD_NAME as string);
+
+    fetch(
+      `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUD_NAME}/image/upload`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setValue(name, data?.url);
+        setLoading(false);
+        setImageUrl(data?.url);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
+
   return (
     <>
+      {label ? label : null}
       <Upload
         name={name}
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
-        action="/api/file"
+        customRequest={customRequest}
         beforeUpload={beforeUpload}
-        onChange={handleChange}
       >
         {imageUrl ? (
           <Image

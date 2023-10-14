@@ -52,6 +52,7 @@ const Sidebar = () => {
 
   return (
     <Sider
+      theme="light"
       collapsible
       collapsed={collapsed}
       onCollapse={(value) => setCollapsed(value)}
@@ -67,18 +68,19 @@ const Sidebar = () => {
     >
       <div
         style={{
-          color: "white",
+          color: "black",
           fontSize: "2rem",
           textAlign: "center",
           fontWeight: "bold",
           marginBottom: "1rem",
+          marginTop: "1rem",
         }}
       >
-        TN
+        Tutor Nest
       </div>
 
       <Menu
-        theme="dark"
+        theme="light"
         defaultSelectedKeys={["1"]}
         mode="inline"
         items={sidebarItems(role)}

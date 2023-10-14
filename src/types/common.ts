@@ -4,6 +4,25 @@ export interface IMeta {
   total: number;
 }
 
+export type ITutor = {
+  _id: string;
+  name: string;
+  image: string;
+  phone: string;
+  email: string;
+  education: string;
+  experience: number;
+  location: string;
+  description: string;
+  fee: number;
+  subjects: string[];
+  available_slots: {
+    slot: string;
+    status: string;
+  }[];
+  category: string;
+};
+
 export type ResponseSuccessType = {
   data: any;
   meta?: IMeta;
@@ -153,18 +172,6 @@ export interface IRoom {
   building: IBuilding;
 }
 
-export interface ICourse {
-  id: string;
-  title: string;
-  code: string;
-  credits: number;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt?: null;
-  prerequisites?: null[] | null;
-  prerequisiteFor?: null[] | null;
-}
-
 export interface IAcademicCoreSemester {
   id: string;
   syncId?: null;
@@ -202,19 +209,6 @@ export interface IAcademicCoreDepartment {
   academicFacultyId: string;
 }
 
-export interface IOfferedCourse {
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt?: null;
-  courseId: string;
-  semesterRegistrationId: string;
-  academicDepartmentId: string;
-  semesterRegistration: ISemesterRegistration;
-  course: ICourse;
-  academicDepartment: IAcademicCoreDepartment;
-}
-
 export interface IAcademicCoreFaculty {
   id: string;
   facultyId: string;
@@ -232,36 +226,6 @@ export interface IAcademicCoreFaculty {
   deletedAt?: null;
   academicDepartmentId: string;
   academicFacultyId: string;
-}
-
-export interface IOfferedCourseSchedule {
-  id: string;
-  dayOfWeek: string;
-  startTime: string;
-  endTime: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt?: null;
-  offeredCourseSectionId: string;
-  roomId: string;
-  facultyId: string;
-  offeredCourseSection: IOfferedCourseSection;
-  faculty: IAcademicCoreFaculty;
-  room: IRoom;
-}
-
-export interface IOfferedCourseSection {
-  id: string;
-  title: string;
-  maxCapacity: number;
-  currentlyEnrolledStudent: number;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt?: null;
-  offeredCourseId: string;
-  offeredCourse: IOfferedCourse;
-  offeredCourseClassSchedules?: IOfferedCourseSchedule[] | null;
-  isTaken?: boolean;
 }
 
 export interface ICoreFaculty {
@@ -285,46 +249,6 @@ export interface ICoreFaculty {
   academicDepartment: IAcademicCoreDepartment;
 }
 
-export interface IMyCourse {
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt?: null;
-  studentId: string;
-  courseId: string;
-  academicSemesterId: string;
-  grade?: null;
-  point: number;
-  totalMarks: number;
-  status: string;
-  course: ICourse;
-}
-
-export interface IFacultyCourse {
-  course: ICourse;
-  sections?: SectionsEntity[] | null;
-}
-
-export interface SectionsEntity {
-  section: IOfferedCourseSection;
-  classSchedules?: IOfferedCourseSchedule[] | null;
-}
-
-export interface IStudentEnrolledCourseMark {
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt?: null;
-  studentId: string;
-  studentEnrolledCourseId: string;
-  academicSemesterId: string;
-  grade?: null;
-  marks: number;
-  examType: string;
-  academicSemester: IAcademicCoreSemester;
-  student: ICoreStudent;
-  studentEnrolledCourse: IStudentEnrolledCourse;
-}
 export interface ICoreStudent {
   id: string;
   studentId: string;
@@ -345,21 +269,4 @@ export interface ICoreStudent {
   academicFaculty: IAcademicCoreFaculty;
   academicDepartment: IAcademicCoreDepartment;
   academicSemester: IAcademicCoreSemester;
-}
-
-export interface IStudentEnrolledCourse {
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt?: null;
-  studentId: string;
-  courseId: string;
-  academicSemesterId: string;
-  grade?: null;
-  point: number;
-  totalMarks: number;
-  status: string;
-  academicSemester: IAcademicCoreSemester;
-  student: ICoreStudent;
-  course: ICourse;
 }

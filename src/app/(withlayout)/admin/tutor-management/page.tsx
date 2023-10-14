@@ -1,21 +1,24 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/TNBreadCrumb";
-import { Button, Input, message } from "antd";
+import { Avatar, Button, Card, Col, Input, Row, message } from "antd";
 import Link from "next/link";
 import {
   DeleteOutlined,
   EditOutlined,
   ReloadOutlined,
+  EllipsisOutlined,
+  SettingOutlined,
   EyeOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import UMTable from "@/components/ui/TNTable";
 import { useAdminsQuery, useDeleteAdminMutation } from "@/redux/api/adminApi";
-import { IDepartment } from "@/types";
-import dayjs from "dayjs";
 import UMModal from "@/components/ui/TNModal";
+import { useTutorsQuery } from "@/redux/api/tutorApi";
+import Meta from "antd/es/card/Meta";
+import Image from "next/image";
 
 const TutorManagementPage = () => {
   const query: Record<string, any> = {};
@@ -42,102 +45,9 @@ const TutorManagementPage = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data, isLoading } = useAdminsQuery({ ...query });
+  const { data, isLoading } = useTutorsQuery({ ...query });
 
-  const admins = data?.admins;
-  const meta = data?.meta;
-
-  const columns = [
-    {
-      title: "Id",
-      dataIndex: "id",
-      sorter: true,
-    },
-    {
-      title: "Name",
-      dataIndex: "name",
-      render: function (data: Record<string, string>) {
-        const fullName = `${data?.firstName} ${data?.middleName} ${data?.lastName}`;
-        return <>{fullName}</>;
-      },
-    },
-    {
-      title: "Email",
-      dataIndex: "email",
-    },
-    {
-      title: "Department",
-      dataIndex: "managementDepartment",
-      render: function (data: IDepartment) {
-        return <>{data?.title}</>;
-      },
-    },
-    {
-      title: "Designation",
-      dataIndex: "designation",
-    },
-    {
-      title: "Created at",
-      dataIndex: "createdAt",
-      render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
-      },
-      sorter: true,
-    },
-    {
-      title: "Contact no.",
-      dataIndex: "contactNo",
-    },
-    {
-      title: "Action",
-      dataIndex: "id",
-      render: function (data: any) {
-        // console.log(data);
-        return (
-          <>
-            <Link href={`/super_admin/admin/details/${data}`}>
-              <Button onClick={() => console.log(data)} type="primary">
-                <EyeOutlined />
-              </Button>
-            </Link>
-            <Link href={`/super_admin/admin/edit/${data}`}>
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="primary"
-              >
-                <EditOutlined />
-              </Button>
-            </Link>
-            <Button
-              type="primary"
-              onClick={() => {
-                setOpen(true);
-                setAdminId(data);
-              }}
-              danger
-              style={{ marginLeft: "3px" }}
-            >
-              <DeleteOutlined />
-            </Button>
-          </>
-        );
-      },
-    },
-  ];
-  const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
-    setPage(page);
-    setSize(pageSize);
-  };
-  const onTableChange = (pagination: any, filter: any, sorter: any) => {
-    const { order, field } = sorter;
-    // console.log(order, field);
-    setSortBy(field as string);
-    setSortOrder(order === "ascend" ? "asc" : "desc");
-  };
+  console.log(data?.tutors);
 
   const resetFilters = () => {
     setSortBy("");
@@ -196,17 +106,54 @@ const TutorManagementPage = () => {
         </div>
       </ActionBar>
 
-      <UMTable
-        loading={isLoading}
-        columns={columns}
-        dataSource={admins}
-        pageSize={size}
-        totalPages={meta?.total}
-        showSizeChanger={true}
-        onPaginationChange={onPaginationChange}
-        onTableChange={onTableChange}
-        showPagination={true}
-      />
+      <Row
+        gutter={{ xs: 24, xl: 20, lg: 20, md: 24 }}
+        justify={"space-between"}
+        align={"stretch"}
+      >
+        {data?.tutors?.map((tutor) => (
+          <Col
+            key={tutor?._id}
+            span={8}
+            style={{ margin: "10px 0", justifyItems: "center" }}
+          >
+            <Card
+              style={{ width: "100%", height: "100%" }}
+              cover={
+                <Image
+                  alt="Tutor Image"
+                  width={300}
+                  height={300}
+                  src={tutor?.image}
+                />
+              }
+              actions={[
+                <Button
+                  type="primary"
+                  key="details"
+                  style={{ width: "90%" }}
+                  onClick={() => {
+                    // Handle the details button click here
+                  }}
+                >
+                  Details
+                </Button>,
+              ]}
+            >
+              <Card.Meta
+                title={tutor?.name}
+                description={
+                  <div>
+                    <p>Location: {tutor?.location}</p>
+                    <p>Subjects: {tutor?.subjects.join(", ")}</p>
+                    <p>Fee: ৳{tutor?.fee}</p>
+                  </div>
+                }
+              />
+            </Card>
+          </Col>
+        ))}
+      </Row>
 
       <UMModal
         title="Remove admin"
